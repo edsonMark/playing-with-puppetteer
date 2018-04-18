@@ -1,8 +1,8 @@
 const {Given,When,And,Then} = require('cucumber');
+const url = 'https://www.google.co.uk/';
 
 Given('I am on the google Homepage', function () {
-  // Write code here that turns the phrase above into concrete actions
-  return 'pending';
+  this.navigateTo(url)
 });
 
 When('I enter a search term', function () {
