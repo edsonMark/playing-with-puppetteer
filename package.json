@@ -1,0 +1,12 @@
+{
+  "name": "",
+  "version": "",
+  "devDependencies": {
+    "cucumber": "^4.1.0",
+    "jest": "22.4.3"
+  },
+  "scripts": {
+    "test": "jest",
+    "cucumber": "cucumber-js"
+ }
+}
