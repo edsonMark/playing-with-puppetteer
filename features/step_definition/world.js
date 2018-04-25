@@ -1,9 +1,18 @@
 const {setWorldConstructor} =require ('cucumber');
-const url = 'https://www.google.co.uk/';
+const puppeteer = require('puppeteer');
+
+
 
 class GoogleWorld {
-  navigateTo() {
-    throw new Error('edson was here')
+  async navigateTo(url) {
+    this.browser = await puppeteer.launch({
+      slowMo: 100,
+      headless: false
+    });
+    const page = await this.browser.newPage();
+    // this.browser.close();
+    await page.goto(url);
+    this.page = page
   }
 }
 
