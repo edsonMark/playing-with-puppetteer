@@ -1,7 +1,7 @@
-const {setWorldConstructor} =require ('cucumber');
+const {setWorldConstructor, setDefaultTimeout } =require ('cucumber');
 const puppeteer = require('puppeteer');
 
-
+setDefaultTimeout(60 * 1000);
 
 class GoogleWorld {
   async navigateTo(url) {
@@ -10,7 +10,7 @@ class GoogleWorld {
       headless: false
     });
     const page = await this.browser.newPage();
-    // this.browser.close();
+
     await page.goto(url);
     this.page = page
   }

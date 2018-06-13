@@ -1,24 +1,21 @@
 const {Given,When,And,Then} = require('cucumber');
 const {expect} = require('chai')
-const url = 'https://www.google.co.uk/';
+const url = 'https://www.asos.com';
 
-Given('I am on the google Homepage', async function () {
-  await this.navigateTo(url)
-  const pageAddress = this.page.url();
-  expect(pageAddress).to.equal(url);
+Given('I want to order a shirt', async function () {
+  await this.navigateTo(url);
 });
 
-When('I enter a search term', async function () {
-  await this.page.type('#lst-ib', 'javascript');
-  await this.page.$eval('#lst-ib', el => el.blur());
-
+When('I search for purple t shirts', async function () {
+  await this.page.focus('#chrome-search');
+  await this.page.keyboard.type('purple tshirt');
+  await Promise.all([
+    this.page.click('button[data-testid=search-button-inline]'),
+    this.page.waitForNavigation(),
+  ])
 });
 
-When('I click on google search button', function () {
-  this.page.click('[name=btnK]');
-});
-
-Then('I expect to see the search results', function () {
-  // Write code here that turns the phrase above into concrete actions
-  return 'pending';
+Then('I should see some purple t shirts', async function () {
+  const searchResultsMessage = await this.page.$eval('#search-term-banner', el => el.textContent);
+  expect(searchResultsMessage).to.equal('Your search results for:"purple tshirt"');
 });
