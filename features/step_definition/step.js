@@ -1,6 +1,6 @@
 const {Given,When,And,Then} = require('cucumber');
 const {expect} = require('chai')
-const url = 'https://www.asos.com';
+const url = 'https://www.evans.co.uk';
 
 const sleep = time => {
   return new Promise(resolve => {
@@ -10,42 +10,37 @@ const sleep = time => {
   })
 }
 
-Given('I am on the asos Homepage', async function () {
+Given('I am on a monty homepage for evans', async function () {
   await this.navigateTo(url);
 });
 
-Given('I Navigate to the Australian Store', async function () {
-  await this.page.click('button[data-testid=change-button]');
-  await sleep(1000)
-  await this.page.select('#country', 'AU');
-  await this.page.click('button[data-testid=save-country-button]');
- const currentUrl = this.page.url();
-  expect(currentUrl).to.include('au');
-});
-
-When('I search for purple t shirts', async function () {
-  await this.page.focus('#chrome-search');
-  await this.page.keyboard.type('purple tshirt');
-  await Promise.all([
-    this.page.click('button[data-testid=search-button-inline]'),
-    this.page.waitForNavigation(),
-  ])
-});
-
-Then('I should see some purple t shirts', async function () {
-  const searchResultsMessage = await this.page.$eval('#search-term-banner', el => el.textContent);
-  expect(searchResultsMessage).to.equal('Your search results for:"purple tshirt"');
+Then('the cookie value is Monty', async function () {
+ const allCookies = await this.page.cookies();
+ console.log(allCookies);
+ allCookies.forEach(cookie=>{
+   if (cookie.name === 'dual-run') {
+     if (cookie.value==='monty'){
+       console.log("//////monty")
+     } else if (cookie.value === 'legacy') {
+       console.log('/////legacy')
+     }
+   }
+     //expect(cookie.value).to.equal('monty')
+  // }
+   ///else if{}(allCookies.name('legacy'))}
+  // {
+   //return legacy
+ //});
+ })
 });
 
 
-Then('I should see New Zealand Dollars', async function () {
-  const productPrices = await this.page
-    .$$eval('span[data-auto-id="productTilePrice"]', elements => {
-      return elements.map(e => e.textContent)
-    });
-  expect(productPrices.length).to.be.greaterThan(0)
-  productPrices.forEach(price => {
-    expect(price).to.match(/^\$\d+\.\d{2}$/);
-  })
-
-});
+// var allCookies = document.cookie;
+//
+// if ( allCookies.includes("value_A")
+// {
+// return variant_A } ;
+// Else (allCookies.includes("value_B)
+// {
+// return variant_B
+// };
