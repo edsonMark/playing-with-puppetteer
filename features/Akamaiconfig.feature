@@ -5,4 +5,4 @@ Feature:  Monty cookie rule
 
 Scenario:Display Monty cookie
 Given I am on a monty homepage for evans
-Then the cookie value is Monty
+Then the cookie value is Monty cookie or Legacy

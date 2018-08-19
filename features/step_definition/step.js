@@ -14,33 +14,9 @@ Given('I am on a monty homepage for evans', async function () {
   await this.navigateTo(url);
 });
 
-Then('the cookie value is Monty', async function () {
+Then('the cookie value is Monty cookie or Legacy', async function () {
  const allCookies = await this.page.cookies();
- console.log(allCookies);
- allCookies.forEach(cookie=>{
-   if (cookie.name === 'dual-run') {
-     if (cookie.value==='monty'){
-       console.log("//////monty")
-     } else if (cookie.value === 'legacy') {
-       console.log('/////legacy')
-     }
-   }
-     //expect(cookie.value).to.equal('monty')
-  // }
-   ///else if{}(allCookies.name('legacy'))}
-  // {
-   //return legacy
- //});
- })
+ const cookie = allCookies.find((cookie) => cookie.name == 'dual-run');
+ expect(cookie).to.not.be.undefined;
+ expect(cookie.value).to.be.oneOf(['legacy', 'monty']);
 });
-
-
-// var allCookies = document.cookie;
-//
-// if ( allCookies.includes("value_A")
-// {
-// return variant_A } ;
-// Else (allCookies.includes("value_B)
-// {
-// return variant_B
-// };
