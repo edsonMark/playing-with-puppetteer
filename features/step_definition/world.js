@@ -3,15 +3,18 @@ const puppeteer = require('puppeteer');
 
 setDefaultTimeout(60 * 1000);
 
+
 class GoogleWorld {
-  async navigateTo(url) {
+  async navigateTo(baseUrl) {
     this.browser = await puppeteer.launch({
       slowMo: 100,
       headless: false
     });
-    const page = await this.browser.newPage();
 
-    await page.goto(url);
+      const page = await this.browser.newPage();
+
+
+    await page.goto(baseUrl);
     this.page = page
   }
 }
