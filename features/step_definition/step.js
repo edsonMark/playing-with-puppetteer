@@ -44,9 +44,7 @@ const grabCookie = (cookieObject) => {
     }
 }
 
-const setMontyCookie = async (akaCookie, cookieValue) => {
-    await this.page.setCookie(akaCookie, cookieValue)
-};
+
 
 
 Given('I am on a monty homepage for evans', async function () {
@@ -59,22 +57,27 @@ Then('the cookie value is Monty cookie or Legacy', async function () {
     let montyCookie = []
     let legacyCookie = []
 
+    let responseCookies = null
+
     await this.navigateTo(homePage);
-    const cookieOnHomePage = await this.page.cookies()
-    allCookies.push(grabCookie(cookieOnHomePage))
+    console.log('homePage')
+    responseCookies = await this.page.cookies()
+    allCookies.push(grabCookie(responseCookies))
 
-    await this.navigateTo(plp);
-    setMontyCookie(cookieOnHomePage.akaCookie, cookieOnHomePage.valueCookie)
-    const cookieOnPlp = await this.page.cookies()
-    allCookies.push(grabCookie(cookieOnPlp))
+    await this.navigateTo(plp, responseCookies);
+    console.log('plp')
+    responseCookies = await this.page.cookies()
+    allCookies.push(grabCookie(responseCookies))
 
-    await this.navigateTo(blog);
-    const cookieOnBlog = await this.page.cookies()
-    allCookies.push(grabCookie(cookieOnBlog))
+    await this.navigateTo(blog, responseCookies);
+    console.log('blog')
+    responseCookies = await this.page.cookies();
+    allCookies.push(grabCookie(responseCookies))
 
-    await this.navigateTo(plpSecond);
-    const cookieOnPlpSecond = await this.page.cookies()
-    allCookies.push(grabCookie(cookieOnPlpSecond))
+    await this.navigateTo(plpSecond, responseCookies);
+    console.log('plpSecond')
+    responseCookies = await this.page.cookies()
+    allCookies.push(grabCookie(responseCookies))
     await this.browser.close()
 
 
@@ -83,8 +86,6 @@ Then('the cookie value is Monty cookie or Legacy', async function () {
 // for(let x = 0; x < 10; x++) {
 //     console.log(x)
 //     await this.navigateTo(baseUrl);
-//     // clear cookies
-//     // refresh
 //     const cook = await this.page.cookies()
 //     const collectAllCookies = cook.filter((item) => item.name !== 'akacd_monty-ab-test')
 //     if (collectAllCookies[0].value === 'legacy') {
@@ -95,7 +96,7 @@ Then('the cookie value is Monty cookie or Legacy', async function () {
 //
 //     allCookies.push(collectAllCookies[0].value)
 //  allCookies.push(await this.page.cookies())
-//
+
 // }
 
 // console.log('allCookies ::: ', allCookies)
