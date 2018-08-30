@@ -45,9 +45,7 @@ const grabCookie = (cookieObject) => {
 }
 
 
-
-
-Given('I am on a monty homepage for evans', async function () {
+Given('I am on a homepage for monty', async function () {
     // await this.navigateTo(baseUrl);
 });
 
@@ -63,22 +61,36 @@ Then('the cookie value is Monty cookie or Legacy', async function () {
     console.log('homePage')
     responseCookies = await this.page.cookies()
     allCookies.push(grabCookie(responseCookies))
+    const cookie = responseCookies.find((cookie) => cookie.name == 'dual-run');
+    expect(cookie).to.not.be.undefined;
+    expect(cookie.value).to.be.oneOf(['legacy', 'monty', 'MDirect']);
 
     await this.navigateTo(plp, responseCookies);
     console.log('plp')
     responseCookies = await this.page.cookies()
     allCookies.push(grabCookie(responseCookies))
+    expect(cookie).to.not.be.undefined;
+    expect(cookie.value).to.be.oneOf(['legacy', 'monty', 'MDirect']);
 
     await this.navigateTo(blog, responseCookies);
     console.log('blog')
     responseCookies = await this.page.cookies();
     allCookies.push(grabCookie(responseCookies))
+    expect(cookie).to.not.be.undefined;
+    expect(cookie.value).to.be.oneOf(['legacy', 'monty', 'MDirect']);
 
     await this.navigateTo(plpSecond, responseCookies);
     console.log('plpSecond')
     responseCookies = await this.page.cookies()
     allCookies.push(grabCookie(responseCookies))
+    expect(cookie).to.not.be.undefined;
+    expect(cookie.value).to.be.oneOf(['legacy', 'monty', 'MDirect']);
     await this.browser.close()
+
+
+
+
+
 
 
 // const total = numOfMontyCookie / 4 * 100
@@ -96,7 +108,7 @@ Then('the cookie value is Monty cookie or Legacy', async function () {
 //
 //     allCookies.push(collectAllCookies[0].value)
 //  allCookies.push(await this.page.cookies())
-
+//
 // }
 
 // console.log('allCookies ::: ', allCookies)

@@ -4,5 +4,5 @@ Feature:  Monty cookie rule
   I want to see the correct cookie
 
 Scenario:Display Monty cookie
-Given I am on a monty homepage for evans
+Given I am on a homepage for monty
 Then the cookie value is Monty cookie or Legacy
